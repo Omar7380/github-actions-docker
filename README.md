@@ -55,12 +55,3 @@ Ce dépôt contient des exemples de workflows GitHub Actions pour automatiser vo
 - [Syntaxe des workflows](https://docs.github.com/fr/actions/using-workflows/workflow-syntax-for-github-actions)
 - [Actions du marché](https://github.com/marketplace?type=actions)
 
-## 📝 Licence
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
-
-## 📚 Ressources
-
-- [Documentation GitHub Actions](https://docs.github.com/actions)
-- [Workflow syntaxe](https://docs.github.com/actions/reference/workflow-syntax-for-github-actions)
-- [Actions du marché](https://github.com/marketplace?type=actions)
