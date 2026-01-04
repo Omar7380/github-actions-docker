@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: github-actions-demo
   labels:
-    app: sample-app
+    app: github-actions-demo
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: sample-app
+      app: github-actions-demo
   template:
     metadata:
       labels:
-        app: sample-app
+        app: github-actions-demo
     spec:
       containers:
-      - name: sample-app
+      - name: github-actions-demo
         image: $DOCKER_IMAGE:$IMAGE_TAG
         ports:
         - containerPort: 5000
