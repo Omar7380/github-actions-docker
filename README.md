@@ -1,57 +1,79 @@
-# 🚀 GitHub Actions - Exemples de Workflows
+# 🚀 CI/CD avec GitHub Actions, Docker et ArgoCD
 
-Ce dépôt contient des exemples de workflows GitHub Actions pour automatiser vos déploiements et tests.
+Ce projet démontre un pipeline CI/CD complet pour une application conteneurisée, utilisant :
+- GitHub Actions pour l'automatisation
+- Docker pour la conteneurisation
+- ArgoCD pour le déploiement sur Kubernetes
 
-## 📋 Fichiers de Workflow
+## 📋 Structure du projet
 
-### 1. `exo_build.yml`
-- Vérification des fichiers YAML
-- Affichage des informations système
-- Exemple de build de base
+```
+.
+├── .github/workflows/    # Définition des workflows GitHub Actions
+│   └── ci-cd.yml        # Pipeline CI/CD complet
+├── k8s/                 # Fichiers de configuration Kubernetes
+│   ├── deployment.yml   # Configuration du déploiement
+│   └── service.yml      # Configuration du service
+├── app/                 # Code source de l'application
+│   └── app.py           # Application exemple Python
+└── Dockerfile           # Fichier de build Docker
+```
 
-### 2. `exo_nodejs.yml`
-- Configuration pour une application Node.js
-- Installation des dépendances
-- Exécution des tests
+## 🚀 Configuration requise
 
-### 3. `exo_variable.yml`
-- Utilisation de variables d'environnement
-- Gestion des secrets
-- Configuration avancée
+1. **Comptes et accès**
+   - Compte GitHub
+   - Compte Docker Hub
+   - Cluster Kubernetes avec ArgoCD installé
 
-### 4. `exo_cron.yml`
-- Exécution planifiée (cron)
-- Tâches récurrentes
-- Nettoyage automatique
+2. **Secrets GitHub**
+   - `DOCKERHUB_USERNAME`: Votre nom d'utilisateur Docker Hub
+   - `DOCKERHUB_TOKEN`: Votre token d'accès Docker Hub
+   - `ARGOCD_SERVER`: URL du serveur ArgoCD
+   - `ARGOCD_USERNAME`: Nom d'utilisateur ArgoCD
+   - `ARGOCD_PASSWORD`: Mot de passe ArgoCD
+   - `ARGOCD_AUTH_TOKEN`: Token d'authentification ArgoCD
 
-## 🚀 Comment commencer
+## 🔧 Comment ça marche
 
-1. **Cloner le dépôt** :
+1. **Déclenchement**
+   - À chaque push sur la branche `main`
+   - Pour chaque pull request vers `main`
+
+2. **Étapes du pipeline**
+   - Construction de l'image Docker
+   - Publication sur Docker Hub
+   - Déploiement automatique via ArgoCD
+
+3. **Versioning**
+   - Chaque image est taguée avec le SHA du commit
+   - Les tags sont automatiquement gérés
+
+## 🛠 Installation
+
+1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/Omar7380/github-actions-docker.git
-   cd github-actions-docker
+   git clone https://github.com/votre-utilisateur/06-github-actions-docker.git
+   cd 06-github-actions-docker
    ```
 
-2. **Choisir un workflow** :
-   - Copiez le fichier souhaité dans `.github/workflows/`
-   - Personnalisez-le selon vos besoins
+2. **Configurer les secrets**
+   - Allez dans les paramètres de votre dépôt GitHub
+   - Accédez à "Secrets and variables" > "Actions"
+   - Ajoutez les secrets requis listés ci-dessus
 
-3. **Pousser les changements** :
-   ```bash
-   git add .
-   git commit -m "Ajout du workflow"
-   git push
-   ```
+3. **Configurer ArgoCD**
+   - Assurez-vous que ArgoCD est installé sur votre cluster
+   - Configurez l'application ArgoCD pour pointer vers ce dépôt
 
-## 🔧 Prérequis
+## 📚 Documentation
 
-- Compte GitHub
-- Dépôt Git configuré
-- Fichier de configuration adapté à votre projet
+- [GitHub Actions](https://docs.github.com/actions)
+- [Docker Documentation](https://docs.docker.com/)
+- [ArgoCD Documentation](https://argo-cd.readthedocs.io/)
+- [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 
-## 📚 Ressources
+## 📝 Licence
 
-- [Documentation GitHub Actions](https://docs.github.com/fr/actions)
-- [Syntaxe des workflows](https://docs.github.com/fr/actions/using-workflows/workflow-syntax-for-github-actions)
-- [Actions du marché](https://github.com/marketplace?type=actions)
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
