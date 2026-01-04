@@ -1,0 +1,20 @@
+name: Install Node.js 18 and display version
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js 18
+        uses: actions/setup-node@v6.1.0
+        with:
+          node-version: 18
+
+      - name: Display Node.js version
+        run: node --version

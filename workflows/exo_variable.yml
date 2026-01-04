@@ -1,0 +1,59 @@
+name: Variables Exercise - Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      couleur:
+        description: "Initial color"
+        required: true
+        default: "yellow"
+
+env:
+  MA_VARIABLE_PRENOM: "Alice"
+  MA_VARIABLE_NOM: "Bob"
+  MA_VARIABLE_MULTILIGNE: |
+    Hello
+    everyone
+    !
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    env:
+      COULEUR: ${{ inputs.couleur }}
+
+    steps:
+      - name: Display global variables
+        run: |
+          echo "First name: $MA_VARIABLE_PRENOM"
+          echo "Last name: $MA_VARIABLE_NOM"
+          echo "Multiline message:"
+          echo "$MA_VARIABLE_MULTILIGNE"
+
+      - name: Variable from button input
+        run: |
+          echo "Initial color: $COULEUR"
+
+      - name: Modify variable dynamically
+        run: |
+          echo "COULEUR=green" >> $GITHUB_ENV
+
+      - name: Check dynamic variable
+        run: |
+          echo "Color after modification: $COULEUR"
+
+      - name: Set output variable
+        id: monStep
+        run: |
+          echo "RESULTAT=success" >> $GITHUB_OUTPUT
+
+      - name: Use output variable
+        run: |
+          echo "Result: ${{ steps.monStep.outputs.RESULTAT }}"
+
+      - name: GitHub predefined variables
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "User: $GITHUB_ACTOR"
+          echo "Commit SHA: $GITHUB_SHA"
