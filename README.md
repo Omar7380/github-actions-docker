@@ -73,7 +73,4 @@ Ce projet démontre un pipeline CI/CD complet pour une application conteneurisé
 - [ArgoCD Documentation](https://argo-cd.readthedocs.io/)
 - [Kubernetes Documentation](https://kubernetes.io/docs/home/)
 
-## 📝 Licence
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
