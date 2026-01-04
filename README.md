@@ -1,35 +1,63 @@
-# 🚀 GitHub Actions - Déploiement d'Application Conteneurisée
+# 🚀 GitHub Actions - Exemples de Workflows
 
-Ce projet contient des exemples de workflows GitHub Actions pour le déploiement d'applications conteneurisées.
+Ce dépôt contient des exemples de workflows GitHub Actions pour automatiser vos déploiements et tests.
 
 ## 📋 Fichiers de Workflow
 
-### 1. `exo_initial.yml`
-Workflow de base qui s'exécute sur chaque push et pull request.
+### 1. `exo_build.yml`
+- Vérification des fichiers YAML
+- Affichage des informations système
+- Exemple de build de base
 
-### 2. `exo_build.yml`
-Exemple de build d'une application avec installation des dépendances et exécution des tests.
+### 2. `exo_nodejs.yml`
+- Configuration pour une application Node.js
+- Installation des dépendances
+- Exécution des tests
 
-### 3. `exo_nodejs.yml`
-Configuration spécifique pour une application Node.js avec installation et test.
+### 3. `exo_variable.yml`
+- Utilisation de variables d'environnement
+- Gestion des secrets
+- Configuration avancée
 
-### 4. `exo_variable.yml`
-Démonstration de l'utilisation de variables et de secrets dans un workflow.
+### 4. `exo_cron.yml`
+- Exécution planifiée (cron)
+- Tâches récurrentes
+- Nettoyage automatique
 
-### 5. `exo_cron.yml`
-Exemple de tâche planifiée qui s'exécute selon une expression cron.
+## 🚀 Comment commencer
 
-## 🛠 Comment utiliser
+1. **Cloner le dépôt** :
+   ```bash
+   git clone https://github.com/Omar7380/github-actions-docker.git
+   cd github-actions-docker
+   ```
 
-1. Copiez le fichier de workflow souhaité dans votre dossier `.github/workflows/`
-2. Personnalisez les étapes selon votre application
-3. Poussez les changements pour déclencher le workflow
+2. **Choisir un workflow** :
+   - Copiez le fichier souhaité dans `.github/workflows/`
+   - Personnalisez-le selon vos besoins
 
-## 🔧 Configuration requise
+3. **Pousser les changements** :
+   ```bash
+   git add .
+   git commit -m "Ajout du workflow"
+   git push
+   ```
+
+## 🔧 Prérequis
 
 - Compte GitHub
-- Dépôt avec votre code source
-- Fichier `Dockerfile` pour la conteneurisation
+- Dépôt Git configuré
+- Fichier de configuration adapté à votre projet
+
+## 📚 Ressources
+
+- [Documentation GitHub Actions](https://docs.github.com/fr/actions)
+- [Syntaxe des workflows](https://docs.github.com/fr/actions/using-workflows/workflow-syntax-for-github-actions)
+- [Actions du marché](https://github.com/marketplace?type=actions)
+
+## 📝 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## 📚 Ressources
 

@@ -1,27 +1,36 @@
-# This is a basic workflow to help you get started with Actions
+# Ce workflow montre un exemple de build basique
 
-name: Exo2
+nom: Exemple de Build
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+# Définit quand le workflow doit s'exécuter
+déclencheur:
+  # Se déclenche sur les pull requests qui modifient des fichiers YAML
   pull_request:
-    paths:
-      - "**/*.yml"
-      - "!test/**/*.yml"
+    chemins:
+      - "**/*.yml"        # Tous les fichiers YAML
+      - "!test/**/*.yml"  # Sauf ceux dans le dossier test/
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  # Permet de lancer le workflow manuellement
+  déclenchement_manuel:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Un workflow est composé d'un ou plusieurs jobs
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  # Job de construction principal
+  construction:
+    # Type de machine qui exécutera le job
+    exécute_sur: ubuntu-dernière-version
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo "Checking YAML files"
+    # Étapes à exécuter
+    étapes:
+      # Étape 1: Vérification du code
+      - nom: Vérification des fichiers
+        exécuter: |
+          echo "Vérification des fichiers YAML..."
+          find . -name "*.yml" -o -name "*.yaml" | xargs -n 1 yamllint || true
+
+      # Étape 2: Affichage des informations système
+      - nom: Afficher les informations système
+        exécuter: |
+          echo "Système d'exploitation: ${{ runner.os }}"
+          echo "Répertoire de travail: ${{ github.workspace }}"
+          echo "Branche: ${{ github.ref_name }}"
