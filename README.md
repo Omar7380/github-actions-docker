@@ -1,76 +1,48 @@
-# 🚀 CI/CD avec GitHub Actions, Docker et ArgoCD
+# Projet Action
 
-Ce projet démontre un pipeline CI/CD complet pour une application conteneurisée, utilisant :
-- GitHub Actions pour l'automatisation
-- Docker pour la conteneurisation
-- ArgoCD pour le déploiement sur Kubernetes
+Ce projet contient une application Flask simple, une configuration Kubernetes, et une configuration Terraform pour déployer sur AWS EC2.
 
-## 📋 Structure du projet
+## Déploiement sur AWS avec Terraform
 
-```
-.
-├── .github/workflows/    # Définition des workflows GitHub Actions
-│   └── ci-cd.yml        # Pipeline CI/CD complet
-├── k8s/                 # Fichiers de configuration Kubernetes
-│   ├── deployment.yml   # Configuration du déploiement
-│   └── service.yml      # Configuration du service
-├── app/                 # Code source de l'application
-│   └── app.py           # Application exemple Python
-└── Dockerfile           # Fichier de build Docker
-```
+### Prérequis
 
-## 🚀 Configuration requise
+1.  **Compte AWS** : Vous devez avoir un compte AWS actif.
+2.  **Bucket S3 pour le State Terraform** :
+    *   Le workflow GitHub Actions se charge automatiquement de créer le bucket S3 pour stocker l'état Terraform s'il n'existe pas.
+    *   Le nom du bucket est configuré dans `terraform/main.tf` et le workflow CI (actuellement : `terraform-state-projet-action-shiroiryu753-v2`).
+    *   Région : `us-east-1` (N. Virginia).
 
-1. **Comptes et accès**
-   - Compte GitHub
-   - Compte Docker Hub
-   - Cluster Kubernetes avec ArgoCD installé
+### Configuration GitHub Actions
 
-2. **Secrets GitHub**
-   - `DOCKERHUB_USERNAME`: Votre nom d'utilisateur Docker Hub
-   - `DOCKERHUB_TOKEN`: Votre token d'accès Docker Hub
-   - `ARGOCD_SERVER`: URL du serveur ArgoCD
-   - `ARGOCD_USERNAME`: Nom d'utilisateur ArgoCD
-   - `ARGOCD_PASSWORD`: Mot de passe ArgoCD
-   - `ARGOCD_AUTH_TOKEN`: Token d'authentification ArgoCD
+Pour que le workflow de déploiement Terraform fonctionne, vous devez ajouter les secrets suivants dans votre dépôt GitHub (Settings > Secrets and variables > Actions) :
 
-## 🔧 Comment ça marche
+*   `AWS_ACCESS_KEY_ID` : Votre clé d'accès AWS.
+*   `AWS_SECRET_ACCESS_KEY` : Votre clé secrète AWS.
+*   `AWS_SESSION_TOKEN` : Votre token de session AWS (nécessaire pour les comptes temporaires/académiques).
+*   `DOCKERHUB_USERNAME` : Votre nom d'utilisateur Docker Hub.
+*   `DOCKERHUB_TOKEN` : Votre token d'accès Docker Hub.
 
-1. **Déclenchement**
-   - À chaque push sur la branche `main`
-   - Pour chaque pull request vers `main`
+### Fonctionnement
 
-2. **Étapes du pipeline**
-   - Construction de l'image Docker
-   - Publication sur Docker Hub
-   - Déploiement automatique via ArgoCD
+*   Le code de l'infrastructure se trouve dans le dossier `terraform/`.
+*   Le workflow GitHub Actions `.github/workflows/ci.yml` gère à la fois le build Docker, la mise à jour des manifestes Kubernetes, et le provisionnement de l'infrastructure Terraform.
+*   Il provisionne une instance EC2 `t2.micro` (éligible à l'offre gratuite).
+*   L'instance EC2 installe Docker et lance automatiquement la dernière version de l'image Docker de l'application.
 
-3. **Versioning**
-   - Chaque image est taguée avec le SHA du commit
-   - Les tags sont automatiquement gérés
+### Accès à l'application
 
-## 🛠 Installation
+Une fois le déploiement terminé, l'adresse IP publique de l'instance sera affichée dans les logs de l'étape "Terraform Apply" du job `terraform` dans le workflow GitHub Actions. L'application est accessible sur le port 80 (HTTP standard).
 
-1. **Cloner le dépôt**
-   ```bash
-   git clone https://github.com/votre-utilisateur/06-github-actions-docker.git
-   cd 06-github-actions-docker
-   ```
+Exemple : `http://34.201.12.34`
 
-2. **Configurer les secrets**
-   - Allez dans les paramètres de votre dépôt GitHub
-   - Accédez à "Secrets and variables" > "Actions"
-   - Ajoutez les secrets requis listés ci-dessus
+## Destruction de l'infrastructure
 
-3. **Configurer ArgoCD**
-   - Assurez-vous que ArgoCD est installé sur votre cluster
-   - Configurez l'application ArgoCD pour pointer vers ce dépôt
+Pour détruire l'infrastructure et le bucket S3 de state :
 
-## 📚 Documentation
+1.  Allez dans l'onglet **Actions** de votre dépôt GitHub.
+2.  Sélectionnez le workflow **Destroy Infrastructure** dans la barre latérale gauche.
+3.  Cliquez sur le bouton **Run workflow**.
 
-- [GitHub Actions](https://docs.github.com/actions)
-- [Docker Documentation](https://docs.docker.com/)
-- [ArgoCD Documentation](https://argo-cd.readthedocs.io/)
-- [Kubernetes Documentation](https://kubernetes.io/docs/home/)
-
-
+Ce workflow va :
+1.  Détruire les ressources AWS créées par Terraform (EC2, Security Group, etc.).
+2.  Une fois la destruction réussie, supprimer le bucket S3 contenant le state Terraform.
