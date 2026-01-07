@@ -33,7 +33,8 @@ jobs:
       - name: Update Kubernetes manifest with new tag
         run: |
           sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/heh-flask:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/heh-flask:${{ github.sha }}|g" k8s/deployment.yml
-
+          # Il prend le hash du commit qui aussi utiliser dans docker et des qu'on pull une image 
+          # on va utiliser le hash du commit pour identifier l'image
 
       - name: Commit and push manifest update
         run: |
@@ -68,7 +69,7 @@ jobs:
 
       - name: Ensure Terraform State Bucket Exists
         run: |
-          BUCKET_NAME="terraform-state-projet-action-shiroiryu753-v2"
+          BUCKET_NAME="terraform-state-projet-action-omar7380-v2"
           if ! aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
             echo "Bucket $BUCKET_NAME does not exist. Creating..."
             aws s3api create-bucket --bucket "$BUCKET_NAME" --region us-east-1

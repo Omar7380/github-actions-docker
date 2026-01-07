@@ -14,5 +14,5 @@ variable "docker_image" {
   description = "Docker image to deploy"
   type        = string
   # Assurez-vous que cette image est publique ou configurez l'authentification Docker
-  default     = "shiroiryu753/heh-flask:latest" 
+  default     = "Omar7380/heh-flask:latest" 
 }

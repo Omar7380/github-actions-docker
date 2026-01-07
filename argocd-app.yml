@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Shiroiryu753/projet_action.git
+    repoURL: https://github.com/Omar7380/github-actions-docker.git
     targetRevision: Master
     path: k8s
   destination:
