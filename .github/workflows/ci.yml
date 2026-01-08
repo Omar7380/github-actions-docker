@@ -2,7 +2,7 @@ name: CI - Build, Push, Update GitOps
 
 on:
   push:
-    branches: [ "Master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -69,14 +69,23 @@ jobs:
 
       - name: Ensure Terraform State Bucket Exists
         run: |
+          set -euo pipefail
           BUCKET_NAME="terraform-state-projet-action-omar7380-v2"
+          REGION="us-east-1"
+
           if ! aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
             echo "Bucket $BUCKET_NAME does not exist. Creating..."
-            aws s3api create-bucket --bucket "$BUCKET_NAME" --region us-east-1
-            echo "Bucket created."
+            if [ "$REGION" = "us-east-1" ]; then
+              aws s3api create-bucket --bucket "$BUCKET_NAME" --region "$REGION"
+            else
+              aws s3api create-bucket --bucket "$BUCKET_NAME" --region "$REGION" --create-bucket-configuration LocationConstraint="$REGION"
+            fi
+            aws s3api put-bucket-versioning --bucket "$BUCKET_NAME" --versioning-configuration Status=Enabled
           else
             echo "Bucket $BUCKET_NAME already exists."
           fi
+
+          aws s3api wait bucket-exists --bucket "$BUCKET_NAME"
 
       - name: Terraform Init
         run: terraform init

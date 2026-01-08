@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Omar7380/github-actions-docker.git
-    targetRevision: Master
+    targetRevision: main
     path: k8s
   destination:
     server: https://kubernetes.default.svc
