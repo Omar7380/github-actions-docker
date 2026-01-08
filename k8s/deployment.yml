@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: heh-flask
-          image: Omar7380/heh-flask:1a6ad96b91ddbd9bcc54dc90f6b12842219bf65c
+          image: omar7380/heh-flask:latest
           imagePullPolicy: IfNotPresent
 
 
