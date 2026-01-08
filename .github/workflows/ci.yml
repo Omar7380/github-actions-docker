@@ -39,7 +39,7 @@ jobs:
         env:
           DOCKERHUB_USERNAME_LC: ${{ env.DOCKERHUB_USERNAME_LC }}
         run: |
-          sed -i "s|^\s*image: .*|        image: ${DOCKERHUB_USERNAME_LC}/heh-flask:${GITHUB_SHA}|g" k8s/deployment.yml
+          sed -i "s|image: .*/heh-flask:.*|image: ${DOCKERHUB_USERNAME_LC}/heh-flask:${GITHUB_SHA}|g" k8s/deployment.yml
           # Il prend le hash du commit qui aussi utiliser dans docker et des qu'on pull une image 
           # on va utiliser le hash du commit pour identifier l'image
 
